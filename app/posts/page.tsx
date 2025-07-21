@@ -6,6 +6,7 @@ import Card from "./ui/Card";
 import Modal from "@/components/Modal";
 import axios from "axios";
 import Swal from "sweetalert2";
+import Loading from "../loading";
 
 export default function PostsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,7 +15,7 @@ export default function PostsPage() {
   const closeModal = () => setIsModalOpen(false);
   const { data: posts, isLoading, isError, refetch } = usePosts();
 
-  if (isLoading) return <p>Loading posts...</p>;
+  if (isLoading) return <Loading/>;
   if (isError) return <p>Failed to load posts.</p>;
 
   const handleAddPost = (e: FormEvent<HTMLFormElement>) => {
@@ -34,6 +35,8 @@ export default function PostsPage() {
 
     axios.post("/api/posts", { title, description, date: new Date() });
 
+    refetch();
+
     Swal.fire({
       title: "Good job!",
       text: "YYour New Post Added Successfully !",
@@ -42,16 +45,13 @@ export default function PostsPage() {
       timer: 1300,
     });
 
-    refetch();
-
     form.reset();
   };
 
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-center gap-5 py-10 container mx-auto bg-red-50 p-5">
-      {posts?.map((post: Post) => (
-        <Card key={post._id} post={post} />
-      ))}
+      {posts?.map((post: Post) => <Card key={post._id} post={post} />)}
+
       <div
         onClick={openModal}
         className="rounded-lg shadow-md p-5 flex flex-col justify-center items-center gap-2 border border-gray-200 group cursor-pointer min-h-50">
@@ -61,13 +61,11 @@ export default function PostsPage() {
           <LuPlus />
         </div>
       </div>
+
       <Modal isOpen={isModalOpen} onClose={closeModal} title="Post Details">
         <form onSubmit={handleAddPost}>
           <div className="mb-4">
-            <label
-              htmlFor="title"
-              className="block text-gray-700 font-semibold mb-2"
-            >
+            <label htmlFor="title" className="block text-gray-700 font-semibold mb-2">
               Title
             </label>
             <input
@@ -78,10 +76,7 @@ export default function PostsPage() {
             />
           </div>
           <div className="mb-2">
-            <label
-              htmlFor="description"
-              className="block text-gray-700 font-semibold mb-2"
-            >
+            <label htmlFor="description" className="block text-gray-700 font-semibold mb-2">
               Description
             </label>
             <textarea
