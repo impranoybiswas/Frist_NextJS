@@ -8,6 +8,8 @@ const navLinks = [
   { path: '/', name: 'Home' },
   { path: '/about', name: 'About' },
   { path: '/contact', name: 'Contact' },
+  { path: '/services', name: 'Services' },
+  { path: '/posts', name: 'Posts' },
 ];
 
 export default function Navbar() {
