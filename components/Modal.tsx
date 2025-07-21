@@ -11,8 +11,8 @@ interface ModalProps {
 export default function Modal({ isOpen , onClose, title, children } : ModalProps) {
   return (
     <div
-      className={`min-w-120 min-h-60 rounded-lg shadow-lg bg-white border border-gray-200 p-5 absolute transition-all duration-500 ease-in-out transform left-1/2 -translate-x-1/2 z-60  
-  ${isOpen ? "top-10 opacity-100" : "-top-130 opacity-0"}`}
+      className={`min-w-120 min-h-60 rounded-xl shadow-xl bg-white border border-gray-200 p-5 fixed transition-all duration-500 ease-in-out transform left-1/2 -translate-x-1/2 z-60  
+      ${isOpen ? "top-10 opacity-100 scale-100" : "-top-130 opacity-0 scale-0"}`}
     >
       <div className="flex justify-between items-center mb-5">
         <h2 className="text-2xl font-semibold">{title}</h2>

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { QueryProvider } from "./providers/QueryProvider";
+import AOSInit from "@/components/AOSInit"; // Import here ✅
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,12 +26,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Navbar/>
-        <QueryProvider>{children}</QueryProvider>
+    <html lang="en" className="scroll-smooth" data-theme="light">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <Navbar />
+        <QueryProvider>
+          <AOSInit /> {/* Mount AOS client-side here ✅ */}
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );

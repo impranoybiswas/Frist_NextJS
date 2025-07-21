@@ -15,4 +15,18 @@ export async function GET() {
   }
 }
 
+export async function POST(req) {
+  const body = await req.json();
+  try {
+    const postCollection = await connectDB("posts");
+    const result = await postCollection.insertOne(body);
+    return NextResponse.json(result);
+  } catch (error) {
+    console.error("Error creating post:", error);
+    return NextResponse.json(
+      { error: "Failed to create post" },
+      { status: 500 }
+    );
+  }
+}
 
