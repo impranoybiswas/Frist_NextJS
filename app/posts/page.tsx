@@ -1,22 +1,19 @@
-import React from 'react'
-import Card from './ui/Card'
+"use client";
+import React from "react";
+import { Post, usePosts } from "@/app/hooks/usePosts";
+import Card from "./ui/Card";
 
-const posts = [
-    {id: 1, title: 'Post 1', body: 'Body 1'},
-    {id: 2, title: 'Post 3', body: 'Body 2'},
-    {id: 3, title: 'Post 3', body: 'Body 3'},
-    {id: 4, title: 'Post 4', body: 'Body 4'},
-    {id: 5, title: 'Post 5', body: 'Body 5'},
-]
+export default function PostsPage() {
+  const { data: posts, isLoading, isError } = usePosts();
 
-export default function Posts() {
+  if (isLoading) return <p>Loading posts...</p>;
+  if (isError) return <p>Failed to load posts.</p>;
+
   return (
-    <section className='flex flex-col justify-center items-center gap-2  h-dvh container mx-auto bg-red-50'>
-      {
-        posts.map(post => (
-          <Card key={post.id} post={post} />
-        ))
-      }
+    <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-center gap-4 py-10 container mx-auto bg-red-50 p-5">
+      {posts?.map((post : Post) => (
+        <Card key={post._id} post={post} />
+      ))}
     </section>
-  )
+  );
 }

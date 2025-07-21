@@ -3,18 +3,18 @@ import React from "react";
 
 interface CardProps {
   post: {
-    id: number;
+    _id: string;
     title: string;
-    body: string;
+    description: string;
   };
 }
 
-export default function Card({ post: { id, title, body } }: CardProps) {
+export default function Card({ post: { _id, title, description } }: CardProps) {
   return (
-    <div className="flex flex-col gap-2 rounded-lg shadow-md p-5 w-50">
+    <div className="flex flex-col gap-2 rounded-lg shadow-md p-5 w-full border border-gray-200 min-h-50">
       <h2>{title}</h2>
-      <p>{body}</p>
-      <Link className="text-blue-500" href={`/posts/${id}`}>Read More</Link>
+      <p>{description}</p>
+      <Link className="text-blue-500" href={`/posts/${_id}`}>Read More</Link>
     </div>
   );
 }
